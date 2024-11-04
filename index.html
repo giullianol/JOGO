@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardião da Fé - A Jornada do Catequista</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        .game-container {
+            max-width: 600px;
+            text-align: center;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Guardião da Fé - A Jornada do Catequista</h1>
+        <p id="gameText"></p>
+        <div id="buttons"></div>
+        <p id="stats"></p>
+    </div>
+
+    <script>
+        let faithPoints = 10;
+        let wisdomPoints = 5;
+        let virtues = [];
+
+        function updateStats() {
+            document.getElementById("stats").innerText = 
+                `Pontos de Fé: ${faithPoints} | Pontos de Sabedoria: ${wisdomPoints} | Virtudes: ${virtues.join(", ") || "Nenhuma"}`;
+        }
+
+        function startGame() {
+            document.getElementById("gameText").innerText = 
+                "Bem-vindo, Samuel! Sua missão é enfrentar as tentações e trazer a paz para a sua comunidade. Prepare-se para a primeira batalha!";
+            document.getElementById("buttons").innerHTML = 
+                `<button class="button" onclick="firstBattle(1)">Enfrentar a Tentação do Orgulho</button>`;
+            updateStats();
+        }
+
+        function firstBattle(choice) {
+            let resultText;
+            if (choice === 1) {
+                resultText = "Você usou a Virtude da Humildade e derrotou a Tentação do Orgulho! Você ganha 3 pontos de Sabedoria.";
+                wisdomPoints += 3;
+                virtues.push("Humildade");
+            } else {
+                resultText = "Você tentou ignorar, mas a Tentação do Orgulho enfraqueceu sua fé. Você perde 2 pontos de Fé.";
+                faithPoints -= 2;
+            }
+            document.getElementById("gameText").innerText = resultText;
+            updateStats();
+            document.getElementById("buttons").innerHTML = 
+                `<button class="button" onclick="secondBattle(1)">Continuar para a próxima batalha</button>`;
+        }
+
+        function secondBattle(choice) {
+            let resultText;
+            if (choice === 1) {
+                resultText = "Você usou a Virtude da Paciência e venceu a Tentação da Ira! Você ganha 2 pontos de Sabedoria.";
+                wisdomPoints += 2;
+                virtues.push("Paciência");
+            } else {
+                resultText = "Você respondeu com raiva e perdeu 3 pontos de Fé.";
+                faithPoints -= 3;
+            }
+            document.getElementById("gameText").innerText = resultText;
+            updateStats();
+
+            if (faithPoints > 0) {
+                document.getElementById("buttons").innerHTML = 
+                    `<button class="button" onclick="endGame()">Finalizar Jornada</button>`;
+            } else {
+                document.getElementById("buttons").innerHTML = 
+                    `<button class="button" onclick="startGame()">Reiniciar Jogo</button>`;
+            }
+        }
+
+        function endGame() {
+            if (faithPoints > 0) {
+                document.getElementById("gameText").innerText = 
+                    "Parabéns, Guardião da Fé! Você completou sua jornada espiritual e ganhou as Virtudes da Humildade e Paciência.";
+            } else {
+                document.getElementById("gameText").innerText = 
+                    "Sua fé enfraqueceu demais. Reflita e fortaleça-se para continuar sua missão. Fim de Jogo.";
+            }
+            document.getElementById("buttons").innerHTML = 
+                `<button class="button" onclick="startGame()">Reiniciar Jogo</button>`;
+        }
+
+        // Start the game when page loads
+        startGame();
+    </script>
+</body>
+</html>
